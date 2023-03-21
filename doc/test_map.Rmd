@@ -1,0 +1,104 @@
+---
+title: "map"
+author: "Jordan Benrezkallah"
+date: '2023-03-21'
+output: html_document
+---
+
+```{r}
+library(leaflet)
+library(plotly)
+```
+
+
+```{r}
+# Conserver seulement les colonnes d'intérêts et arrondir les coordonnées GPS
+mutate(SCS, 
+       LONG = round(SCS$LONG, digits = 2), 
+       LATI = round(SCS$LATI, digits = 2)) %>%
+  select(N, sp, genus, family, MICR, plante, pl_fam, LATI, LONG, DAT2) %>%
+  drop_na(LATI) %>%
+  drop_na(sp) -> data
+```
+
+
+```{r}
+# Filtrer les données 
+filter(data, genus == "Eucera") -> mon_genre
+naniar::vis_miss(mon_genre)
+
+table(mon_genre$sp)
+```
+
+
+```{r}
+# filter(SCS, genus == "Eucera") %>%
+#   head(n = 426882)  -> data
+fig <- mon_genre 
+
+fig <- fig %>%
+
+  plot_ly(
+
+    lat = ~LATI,
+
+    lon = ~LONG,
+
+    marker = list(color = "darkred"),
+
+    type = 'scattermapbox',
+    
+    hovertext = fig$sp) 
+
+fig <- fig %>%
+
+  layout(
+
+    mapbox = list(
+
+      style = 'open-street-map',
+
+      zoom = 6,
+
+      center = list(lon = 4, lat = 50)))
+fig
+
+```
+
+```{r}
+
+
+
+us_cities = read.csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
+
+
+fig <- us_cities 
+
+fig <- fig %>%
+
+  plot_ly(
+
+    lat = ~lat,
+
+    lon = ~lon,
+
+    marker = list(color = "fuchsia"),
+
+    type = 'scattermapbox',
+
+    hovertext = us_cities[,"City"]) 
+
+fig <- fig %>%
+
+  layout(
+
+    mapbox = list(
+
+      style = 'open-street-map',
+
+      zoom =2.5,
+
+      center = list(lon = -88, lat = 34)))
+```
+
+

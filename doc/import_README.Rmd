@@ -1,0 +1,16 @@
+---
+title: "Import DataBase"
+author: "Jordan Benrezkallah"
+date: '2023-03-21'
+output: html_document
+---
+
+Source :
+https://www.r-bloggers.com/2013/01/getting-access-data-into-r/
+
+Pour configurer la base de données avec R 64bits :
+
+Ouvrir : Panneau de configuration > Systeme et securite > Outils d'administration > Sources de donnees ODBC (64 bits) 
+Ajouter > Microsoft Access Driver (\*.mdb, \*accdb)
+Donner un nom > Selectionner le dossier où se trouve le fichier > Sélectionner le fichier .mdb
+Cliquer sur OK > Cliquer sur OK.
