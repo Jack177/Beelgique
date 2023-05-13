@@ -1,17 +1,21 @@
 # library(remotes)
 # install_github("rOpenGov/giscoR")
 # install.packages("giscoR")
-
+library(ggplot2)
 library(giscoR)
 library(dplyr)
-be <- gisco_get_nuts(country = "Belgium", nuts_level = 'all')
+library(Cairo)
 
-ggplot(ITA) +
-  geom_sf() +
-  geom_sf_text(aes(label = NAME_LATN)) +
-  theme(axis.title = element_blank())
 
 be <- gisco_get_countries(resolution = "03", country = "Belgium")
 ggplot(be) +
-  geom_sf(fill = "tomato") +
-  theme_minimal()
+  geom_sf(fill = "white", size = 1.5) + 
+  theme(panel.background = element_rect(fill = "white"),
+        panel.grid = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank()) 
+
+
+ggsave(filename = "Output/Belgium_map.svg")
+ggsave(filename = "Output/Belgium_map.png")
